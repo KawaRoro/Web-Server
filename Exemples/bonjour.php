@@ -19,4 +19,5 @@ else
 }
 ?>
 
+
 <a href="bonjour.php?nom=Dupont&amp;prenom=Jean&repeter=1">Dis-moi bonjour !</a> 
