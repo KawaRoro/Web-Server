@@ -15,7 +15,7 @@
                         <li><a href="index.php">Accueil</a></li>
                         <li><a href="index.php#steps">Destinations</a></li>
                         <li><a href="index.php#possibilities">Circuits</a></li>
-                        <li><a href="index.php#contact">Contact</a></li>
+                        <li><a href="index.php#contact" class="orange" >Contact</a></li>
                     </ul>
                 </nav>
             </div>
