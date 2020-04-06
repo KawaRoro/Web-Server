@@ -2,21 +2,22 @@ const buttonContact = document.getElementById('button-3'); // button
 
 function checkInputName(valName) {
     var email = document.getElementById("email").value;
-    var nom = valName;
+    var name = valName;
 
-    checkValidForm(nom, email);
+    checkValidForm(name, email);
 }
 
 function checkInputEmail(valName) {
     var email = valName;
-    var nom = document.getElementById("name").value;
+    var name = document.getElementById("name").value;
 
-    checkValidForm(nom, email);
+    checkValidForm(name, email);
 }
 
 function validForm() {
     
     if (email.indexOf('@') != -1) {
+        document.getElementById("button-ok").disabled = false;
         //alert("Votre demande a bien été prise en compte, vous serez contacté très prochainement");
         document.getElementById("contact-us").innerHTML = "Déjà contacté";
         /*document.getElementById("contact-us").className = "form-done";
@@ -34,8 +35,8 @@ function resetForm() {
     document.getElementById("name").value = "";
 }
 
-function checkValidForm(nom, email) {
-    if (nom != "" && email != "") {
+function checkValidForm(name, email) {
+    if (name != "" && email != "") {
         document.getElementById("button-ok").disabled = false;
     } else {
         document.getElementById("button-ok").disabled = true;

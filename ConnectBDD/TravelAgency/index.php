@@ -5,24 +5,20 @@ session_start();
 $session = session_id();
 include('cookie.php');
 
-if(isset($_SESSION['nom']) && ($_SESSION['nom'] == "Schoenmaeker") ){
-    delCookie("nom");
+if((isset($_SESSION['name']) && ($_SESSION['name'] == "Schoenmaeker"))  || (isset($_SESSION['name']) && ($_SESSION['name'] == "Khalil")) ){ // destruction de la session pour les administrateurs 
+    delCookie("name");
     delCookie("email");
     delCookie("session");
     //session_destroy();
 }
-/*if(isset($_COOKIE['session'])){
-    echo $_COOKIE['session']."<br>";
-}*/
 
-//echo session_id()."<br>";
 // On s'amuse à créer quelques variables de session dans $_SESSION
-if(!isset($_SESSION['nom'])){
-    if(isset($_COOKIE['nom'])){
-        $_SESSION['nom'] = $_COOKIE['nom'];
+if(!isset($_SESSION['name'])){
+    if(isset($_COOKIE['name'])){
+        $_SESSION['name'] = $_COOKIE['name'];
     }else{
-        $_SESSION['nom'] = '';
-        setcookie('nom', '' , time() + 365*24*3600, null, null, false, true); // On écrit un cookie
+        $_SESSION['name'] = '';
+        setcookie('name', '' , time() + 365*24*3600, null, null, false, true); // On écrit un cookie
     }
 }
 if(!isset($_SESSION['email'])){
@@ -46,17 +42,11 @@ if (isset($_POST['name']) AND isset($_POST['email']) AND isset($_POST['contact']
 {
     if($_POST['contact'] == "true"){
         $contact = true;
-        $_SESSION['nom'] = $name = $_POST['name'];
+        $_SESSION['name'] = $name = $_POST['name'];
         $_SESSION['email'] = $email = $_POST['email'];
 
-        setcookie('nom', $name , time() + 365*24*3600, null, null, false, true); // On écrit un cookie
+        setcookie('name', $name , time() + 365*24*3600, null, null, false, true); // On écrit un cookie
         setcookie('email', $email , time() + 365*24*3600, null, null, false, true); // On écrit un cookie
-
-        // Envoi en BDD
-        /*require_once('connect.php');
-        $req = $bdd->prepare('INSERT contacts(nom_contact, email_contact, session_contact) VALUES (?, ?, ?)');
-        
-        $req->execute(array($name, $email, session_id() ));*/
 
     }else{
         $contact = false;
@@ -85,6 +75,7 @@ if (isset($_POST['name']) AND isset($_POST['email']) AND isset($_POST['contact']
                         <li><a href="#steps">Destinations</a></li>
                         <li><a href="#possibilities">Circuits</a></li>
                         <li><a href="#contact">Contact</a></li>
+                        <li><a href="admin.php">Administrateur</a></li>
                     </ul>
                 </nav>
             </div>
@@ -143,7 +134,7 @@ if (isset($_POST['name']) AND isset($_POST['email']) AND isset($_POST['contact']
         <section id="contact">
             <div class="wrapper">
                 <?php 
-                if( ($contact == true) || (isset($_COOKIE['nom']) && isset($_COOKIE['email']) && isset($_COOKIE['session'])) ){
+                if( ($contact == true) || (isset($_COOKIE['name']) && isset($_COOKIE['email']) && isset($_COOKIE['session'])) ){
                     echo ('<h3 id="contact-us">Déjà contacté</h3>
                     <p>Chez Travel Agency nous savons que voyager est une aventure humaine mais également un engagement financier important pour vous. C\'est pourquoi nous mettons un point d\'honneur à prendre en compte chacune de vos attentes pour vous aider dans la préparation de votre séjour, circuit ou voyage sur mesure.</p>
                     
