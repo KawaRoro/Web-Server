@@ -148,3 +148,17 @@ li:first-child span {
   background: #000;
   color: #fff;
 }
+
+/* DIV BUTTONS */
+
+#left {
+  float:left;
+  margin: 0 0 0 30%;
+  width:120px;
+}
+
+#right {
+  float:right;
+  margin: 0 30% 0 0;
+  width:120px;
+}

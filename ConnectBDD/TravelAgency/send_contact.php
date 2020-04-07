@@ -3,7 +3,7 @@ require_once('connect.php');
 require_once('cookie.php');
 session_start();
 $fail_contact_form = false;
-$go_to_send_contact = false;
+$check_send = false;
 $identification_by_session = false;
 
 // Vérification si identification par session
@@ -13,22 +13,14 @@ if(isset($_SESSION[$var_project.'login']) && isset($_SESSION[$var_project.'passw
     }
 }
 
-// Identification
-if (isset($_POST[$var_project.'login']) && isset($_POST[$var_project.'password']) && isset($_POST[$var_project.'session']) || $identification_by_session) // Si le nom et l'email est renseigné + étape contact
-{
-    if($identification_by_session){
-        $login = $_SESSION[$var_project.'login'];
-        $password = $_SESSION[$var_project.'password'];
-        $session = $_SESSION[$var_project.'session'];
-    }else{
-        $_SESSION[$var_project.'login'] = $login = $_POST[$var_project.'login'];
-        $_SESSION[$var_project.'password'] = $password = $_POST[$var_project.'password'];
-        $_SESSION[$var_project.'session'] = $session = $_POST[$var_project.'session'];
-    }
 
-    setcookie($var_project.'login', $login , time() + 365*24*3600, null, null, false, true); // On écrit un cookie
-    setcookie($var_project.'password', $password , time() + 365*24*3600, null, null, false, true); // On écrit un cookie
-    setcookie($var_project.'session', $session , time() + 365*24*3600, null, null, false, true); // On écrit un cookie
+// Identification
+if ($identification_by_session) // Si le nom et l'email est renseigné + étape contact
+{
+    
+    $login = $_SESSION[$var_project.'login'];
+    $password = $_SESSION[$var_project.'password'];
+    $session = $_SESSION[$var_project.'session'];
 
     // Envoi en BDD
     require_once('functions.php');
@@ -64,7 +56,7 @@ if (isset($_POST[$var_project.'login']) && isset($_POST[$var_project.'password']
                         <section>
                             <div style="text-align:center;">'); //  id="main-image"
         
-                            echo ('<p style="text-align:center;"><h3>Liste des personnes à contacter</h3></p><br>
+                            echo ('<p style="text-align:center;"><h3>Liste d\'envoi des messages</h3></p><br>
                                     <ul class="list">
                                         <li class="list"><span class="number">#</span><span class="name">Name</span><span class="email"> Email</span><span class="date"> Date inscription</span><span class="check"> Contacté</span></li>');
 
@@ -76,29 +68,47 @@ if (isset($_POST[$var_project.'login']) && isset($_POST[$var_project.'password']
 
                                             $check_contact = $data['check_contact'];
                                             if($check_contact == 0) {
-                                                $go_to_send_contact = true;
-                                                $check_contact = '<input type="checkbox" id="scales" name="scales" >';
-                                            }else{
-                                                $check_contact = '<input type="checkbox" id="scales" name="scales" checked>';
+                                                
+                                                // Envoi de l'email
+                                                //if(registrationEmailWithToken($data['email_contact'] ,  $data['name_contact'] , $data['token_contact'])){
+                                                    $check_send = true;
+                                                //}else{
+                                                   // $check_send = false;
+                                                //}
+                                                
+                                                // Si ok checked
+                                                if($check_send){
+                                                    $check_contact = '<input type="checkbox" id="scales" name="scales" checked>';
+                                                    // UPDATE -> envoi en BDD
+                                                    $req_update_contact = 'UPDATE contacts SET check_contact = 1 WHERE check_contact = 0 AND name_contact = "'.$data['name_contact'].'" AND email_contact= "'.$data['email_contact'].'" ';
+                                                    $req = $bdd->prepare($req_update_contact);
+                                                    $req->execute();
+                                                }else{
+                                                    $check_contact = '<input type="checkbox" id="scales" name="scales" >';
+                                                }
+                                                
+                                                echo ('<li><a href="#"><span class="number">'.$data['id_contact'].'</span><span class="name">'.$data['name_contact'].'</span><span class="email"> '.$data['email_contact'].'</span><span class="date"> '.$date_contact.'</span><span class="check"> '.$check_contact.'</span></a></li>');
+                                                echo('<iframe name="page" title="" width="800" height="200" src="registration_mail.php?name='.$data['name_contact'].'&email='.$data['email_contact'].'" ></iframe>');
                                             }
 
-                                            echo ('<li><a href="#"><span class="number">'.$data['id_contact'].'</span><span class="name">'.$data['name_contact'].'</span><span class="email"> '.$data['email_contact'].'</span><span class="date"> '.$date_contact.'</span><span class="check"> '.$check_contact.'</span></a></li>');
-                                            //echo $data['name_contact'].' '.$data['email_contact'].' '.$data['check_contact'].' '.$data['date_contact'].' '.$data['session_contact'].' '.$data['ip_contact'].' '.$data['ip_type_contact']; // 
+                                            //echo $data['session_contact'].' '.$data['ip_contact'].' '.$data['ip_type_contact']; // 
                                         }
                             echo '</ul>';
+                    // Message : Demande d'envoi réalisée avec succès
+                    echo '<br><p style="text-align:center;"><h3>Demande d\'envoi réalisée avec succès</h3></p>';
                     // Fermeture du HTML
                     echo '<div id="left">';
                     echo '<form name="contact-form" method="post" action="index.php">';
                     echo '<input type="submit" value="RETOUR" id="button-ok" class="button-4" >'; //  disabled="disabled" 
                     echo '</form>';
                     echo '</div>';
-                    if($go_to_send_contact) { // button actif uniquement si au moins une personne est à contacter
-                        echo '<div id="right">';
-                        echo '<form name="contact-form" method="post" action="send_contact.php">';
-                        echo '<input type="submit" value="ENVOI" id="button-ok" class="button-4" >'; //  disabled="disabled" 
-                        echo '</form>';
-                        echo '</div>';
-                    }    
+                    
+                    echo '<div id="right">';
+                    echo '<form name="contact-form" method="post" action="list_contact.php">';
+                    echo '<input type="submit" value="LISTE" id="button-ok" class="button-4" >'; //  disabled="disabled" 
+                    echo '</form>';
+                    echo '</div>';
+                        
                     echo ('</div>
                         </section>
                     </body>
@@ -149,5 +159,6 @@ if (isset($_POST[$var_project.'login']) && isset($_POST[$var_project.'password']
     //delCookie($var_project.'password');
     delCookie($var_project.'session');
     delCookie($var_project.'token');
+
 }
 ?>

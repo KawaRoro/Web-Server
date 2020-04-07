@@ -1,4 +1,5 @@
 <?php
+require_once('connect.php');
 session_start();
 $session = session_id();
 ?>
@@ -16,27 +17,27 @@ $session = session_id();
   <div class="form">
     <h2>Espace administrateur</h2>
     <?php
-    if(isset($_SESSION['login']) && isset($_SESSION['password'])){
+    if(isset($_SESSION[$var_project.'login']) && isset($_SESSION[$var_project.'password'])){
       header('Location: list_contact.php');
       exit();
     }else{
       echo ('<form class="register-form" method="post" action="list_contact.php">
-        <label for="name">Identifiant</label><sup><span style="color : red;">*</span></sup>
-        <input type="text" name="name" placeholder="Entrer votre identifiant"/>
-        <label for="password">Mot de passe</label><sup><span style="color : red;">*</span></sup>
-        <input type="password" name="password" placeholder="Entrer votre mot de passe"/>
-        <input type="hidden" name="session" value="'.$session.'"/>
-        <label for="email">Courriel</label><sup><span style="color : red;">*</span></sup>
-        <input type="text" name="email" placeholder="Entrer votre email"/>
+        <label for="'.$var_project.'login">Identifiant</label><sup><span style="color : red;">*</span></sup>
+        <input type="text" name="'.$var_project.'login" placeholder="Entrer votre identifiant"/>
+        <label for="'.$var_project.'password">Mot de passe</label><sup><span style="color : red;">*</span></sup>
+        <input type="password" name="'.$var_project.'password" placeholder="Entrer votre mot de passe"/>
+        <input type="hidden" name="'.$var_project.'session" value="'.$session.'"/>
+        <label for="'.$var_project.'email">Courriel</label><sup><span style="color : red;">*</span></sup>
+        <input type="text" name="'.$var_project.'email" placeholder="Entrer votre email"/>
         <button>Valider</button>
         <p class="message">Pas enregistré ? <a href="#">Connection</a></p>
       </form>
       <form class="login-form" method="post" action="list_contact.php">
-        <label for="name">Identifiant</label><sup><span style="color : red;">*</span></sup>
-        <input type="text" name="name" placeholder="Entrer votre identifiant"/>
-        <label for="password">Mot de passe</label><sup><span style="color : red;">*</span></sup>
-        <input type="password" name="password" placeholder="Entrer votre mot de passe"/>
-        <input type="hidden" name="session" value="'.$session.'"/>
+        <label for="'.$var_project.'login">Identifiant</label><sup><span style="color : red;">*</span></sup>
+        <input type="text" name="'.$var_project.'login" placeholder="Entrer votre identifiant"/>
+        <label for="'.$var_project.'password">Mot de passe</label><sup><span style="color : red;">*</span></sup>
+        <input type="password" name="'.$var_project.'password" placeholder="Entrer votre mot de passe"/>
+        <input type="hidden" name="'.$var_project.'session" value="'.$session.'"/>
         <button>Valider</button>
         <!--<p class="message">Pas enregistré ? <a href="#">Créer un compte</a></p>-->
       </form>');

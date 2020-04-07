@@ -1,6 +1,6 @@
 <?php
-// Just connect to BDD
-
+$var_project = "TA_"; // Travel agency
+// Connect to BDD
 try {
     $bdd = new PDO('mysql:host=localhost;dbname=portfolio;charset=utf8', 'root', '', array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
     
