@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS `contacts` (
   `email_contact` varchar(255) NOT NULL,
   `check_contact` tinyint(1) NOT NULL DEFAULT '0',
   `session_contact` varchar(255) NOT NULL,
+  `token_contact` varchar(255) NOT NULL,
   `date_contact` datetime DEFAULT NULL,
   `ip_contact` varchar(255) DEFAULT NULL,
   `ip_type_contact` varchar(255) DEFAULT NULL,
