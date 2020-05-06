@@ -1,0 +1,146 @@
+ 
+* {
+	font-family: 'Arial', serif;
+}
+body {
+	position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0; 
+    margin: 5 px ;
+    background-color: #ffffff;
+	border: 2px solid #980000;
+	border-radius: 5px;
+	height: 98%;
+}
+
+header {
+    background-color: #980000;
+	color: #FFFFFF;
+	text-align: center;
+	margin: 0;
+}
+
+#wrapper {
+	width: 1em;
+	/*margin: 0 auto 0 auto;*/
+}
+
+#main {
+	float:left;
+	margin: 0px;
+}
+
+#main-image {
+	text-align: center;
+}
+
+footer {
+	clear:both;
+}
+
+h3 {
+	text-align: center;
+	color: white;
+	background-color: #980000;
+}
+
+.copyright {
+	display:block;
+	text-align: center;
+	position:fixed;
+	bottom:25px;
+    width:100%;
+}
+
+a {
+	color: #FAE241;
+}
+
+/* Table TD TR */
+table {
+	width: 100%;
+	border: 1px solid white;
+	color:white;
+	text-align: center;
+}
+
+td {
+	border: 1px solid white;
+	background-color: #980000;
+}
+
+tr.list {
+	list-style: none; 
+	/*width: 100%; */
+	/*margin: 0 auto;*/
+	color: #FAE241;
+	font-size: 1.2em;
+	background-color: #980000;
+	padding-left: 0px;
+}
+
+
+/* Table UL LI */
+
+ul {
+	width: 100%;
+}
+
+ul.list {
+	list-style: none; 
+	/*width: 100%; */
+	/*margin: 0 auto;*/
+	font-size: 1.2em;
+	background-color: #980000;
+	padding-left: 0px;
+}
+  
+ul.list li.list {
+	/*border-bottom: 1px dotted #666;*/
+	border: 1px solid white;
+}
+  
+ul span {
+	display: inline-block;
+	text-align: center;
+	border: 1px solid white;
+	color: #FFFFFF;
+}
+
+span.type {
+	width: 10%;
+}
+span.postal_code {
+	width: 10%;
+}
+span.city {
+	width: 10%;
+}
+span.address {
+	width: 10%;
+}
+span.num_room {
+	width: 10%;
+}
+span.area {
+	width: 10%;
+}
+span.price_by_month {
+	width: 10%;
+}
+span.available {
+	width: 10%;
+}
+span.do {
+	width: 19%;
+}
+li:hover span {
+	/*background: #efefef;*/
+}
+li:first-child span {
+	color: #FAE241;
+}
+
+	
